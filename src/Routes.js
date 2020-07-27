@@ -70,8 +70,14 @@ const Routes = (props) => {
           render={(props) => <Login {...props} setAutoLogout={setAutoLogout} />}
         />
         <Route path="/signup" exact component={Signup} />
-        <PrivateRoute path="/beers" exact component={BeerList} />
-        <PrivateRoute path="/beer/:beerId" exact component={Beer} />
+        <PrivateRoute
+          path="/beers"
+          exact
+          render={(props) => (
+            <BeerList {...props} logoutHandler={logoutHandler} />
+          )}
+        />
+        <PrivateRoute path="/beers/:beerId" exact component={Beer} />
         <Redirect to="/" />
       </Switch>
     </Router>
