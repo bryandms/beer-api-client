@@ -8,6 +8,7 @@ const BeerList = (props) => {
   const [beers, setBeers] = useState([]);
   const [totalBeers, setTotalBeers] = useState(0);
   const [beerPage, setBeerPage] = useState(1);
+  const [totalConsumed, setTotalConsumed] = useState(0);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -37,11 +38,32 @@ const BeerList = (props) => {
       .then((res) => {
         setBeers(res.beers);
         setTotalBeers(res.totalItems);
+        getTotalConsumed();
         setLoading(false);
       })
       .catch((error) => {
         setError(error.message);
         setLoading(false);
+      });
+  };
+
+  const getTotalConsumed = () => {
+    fetch(`https://beer-rest-api.herokuapp.com/api/totalConsumed`, {
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      },
+    })
+      .then((res) => {
+        if (res.status !== 200)
+          throw new Error("Failed to fetch total consumed.");
+
+        return res.json();
+      })
+      .then((res) => {
+        setTotalConsumed(res.totalConsumed);
+      })
+      .catch((error) => {
+        setError(error.message);
       });
   };
 
@@ -106,6 +128,11 @@ const BeerList = (props) => {
         <div className="col-12 col-md-8">
           <div className="card shadow border-0">
             <div className="card-body">
+              <h3>
+                Total units consumed:{" "}
+                <span class="badge badge-secondary">{totalConsumed}</span>
+              </h3>
+
               {beers.length <= 0 && !loading ? (
                 <div>
                   <img
