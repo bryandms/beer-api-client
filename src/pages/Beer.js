@@ -58,7 +58,7 @@ const Beer = (props) => {
                       <b>Type:</b> {beer.type}
                     </li>
                     <li className="list-group-item d-flex flex-wrap justify-content-between align-items-center disabled">
-                      <b>brand:</b> {beer.brand}
+                      <b>Brand:</b> {beer.brand}
                     </li>
                     <li className="list-group-item d-flex flex-wrap justify-content-between align-items-center disabled">
                       <b>Alcohol Percentage:</b> {beer.alcoholPercentage} %
